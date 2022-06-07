@@ -7,12 +7,15 @@ using System;
 
 public class GameDirector : MonoBehaviour
 {
-    GameObject hpGauge;
-    GameObject UI_lifeCount;
-    GameObject UI_score;
+    GameObject GameObj_HpGauge;
+    GameObject GameObj_LifeCount;
+    GameObject GameObj_Score;
 
-    GameObject UI_JumpCount;
-    GameObject UI_MedicineCount;
+    GameObject GameObj_JumpCount;
+    GameObject GameObj_MedicineCount;
+
+    GameObject GameObj_PauseGame;
+    GameObject GameObj_ResumeGame;
     
     float ratio;    
     float scoreTime;
@@ -29,25 +32,31 @@ public class GameDirector : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        hpGauge = GameObject.Find("ImageUI_HpGauge");
-        UI_lifeCount = GameObject.Find("TextUI_LifeCount");
-        UI_score = GameObject.Find("TextUI_Score");
+        GameObj_HpGauge = GameObject.Find("ImageUI_HpGauge");        
 
-        UI_JumpCount = GameObject.Find("TextUI_JumpCount");
-        UI_MedicineCount = GameObject.Find("TextUI_MedicineCount");
+        GameObj_PauseGame = GameObject.Find("PauseButton");
+        GameObj_ResumeGame = GameObject.Find("ResumeButton");
+        
+        bPause = false;
+        GameObj_PauseGame.SetActive(true);
+        GameObj_ResumeGame.SetActive(false);
+
+        GameObj_LifeCount = GameObject.Find("TextUI_LifeCount");
+        GameObj_Score = GameObject.Find("TextUI_Score");
+
+        GameObj_JumpCount = GameObject.Find("TextUI_JumpCount");
+        GameObj_MedicineCount = GameObject.Find("TextUI_MedicineCount");
 
         GameObject.Find("TextUI_JumpScore").GetComponent<Text>().text = "x" + Common.jumpScore.ToString();
-        GameObject.Find("TextUI_MedicineScore").GetComponent<Text>().text = "x" + Common.medicineScore.ToString();
-
-        bPause = false;
+        GameObject.Find("TextUI_MedicineScore").GetComponent<Text>().text = "x" + Common.medicineScore.ToString();        
 
         curScore = 0;
         scoreTime = 0.0f;
 
         lifeCount = maxLifeCount;
         ratio = 1.0f / maxLifeCount;
-        hpImage = hpGauge.GetComponent<Image>();
-        UI_lifeCount.GetComponent<Text>().text = lifeCount.ToString();
+        hpImage = GameObj_HpGauge.GetComponent<Image>();
+        GameObj_LifeCount.GetComponent<Text>().text = lifeCount.ToString();
     }
 
     void Update() {
@@ -61,10 +70,10 @@ public class GameDirector : MonoBehaviour
 
         curScore = calculateScore();
 
-        UI_score.GetComponent<Text>().text = "Score: " + curScore.ToString();
+        GameObj_Score.GetComponent<Text>().text = "Score: " + curScore.ToString();
 
-        UI_JumpCount.GetComponent<Text>().text = Common.playerJumpCount.ToString();
-        UI_MedicineCount.GetComponent<Text>().text = Common.medicineCount.ToString();
+        GameObj_JumpCount.GetComponent<Text>().text = Common.playerJumpCount.ToString();
+        GameObj_MedicineCount.GetComponent<Text>().text = Common.medicineCount.ToString();
         
 /*
         int minute = (int)scoreTime / 60;
@@ -96,20 +105,22 @@ public class GameDirector : MonoBehaviour
         return value;
     }
 
-    public void onClickPauseStartButton() {
-        Debug.Log("onClickStopGameButton");
-        Image image = GameObject.Find("ImageUI_HpGauge").GetComponent<Image>();
-        if(image != null) {
-            if(bPause) {
-                image.sprite = Resources.Load<Sprite>("img_GamePause") as Sprite;
-                //TODO : Game Start
-            } else {
-                image.sprite = Resources.Load<Sprite>("img_GameStart") as Sprite;
-                //TODO : Game Start
-            }
-
-            bPause = !bPause;
-        }        
+    public void onClickPauseResumeButton() {
+        Debug.Log("onClickPauseResumeButton:: " + bPause);
+        
+        if(bPause) {
+            GameObj_PauseGame.SetActive(true);
+            GameObj_ResumeGame.SetActive(false);                
+            //TODO : Game Start
+            Time.timeScale = 1;
+            bPause = false;
+        } else {
+            GameObj_PauseGame.SetActive(false);
+            GameObj_ResumeGame.SetActive(true);
+            //TODO : Game Start
+            Time.timeScale = 0;
+            bPause = true;
+        }   
     }
 
     public void onClickStopGameButton() {
@@ -122,9 +133,9 @@ public class GameDirector : MonoBehaviour
         Color prev = hpImage.color;
         float value = ratio* level;
         hpImage.color = new Color(prev.r-value, prev.g-value, prev.b-value, prev.a-value);
-        //this.hpGauge.GetComponent<Image>().fillAmount -= 0.2f * level;
+        //this.GameObj_HpGauge.GetComponent<Image>().fillAmount -= 0.2f * level;
         lifeCount -= level;
-        UI_lifeCount.GetComponent<Text>().text = lifeCount.ToString();
+        GameObj_LifeCount.GetComponent<Text>().text = lifeCount.ToString();
         
         if(lifeCount <= 0) {
             Debug.Log("Game over");            
@@ -138,9 +149,9 @@ public class GameDirector : MonoBehaviour
             Color prev = hpImage.color;
             float value = ratio * level;
             hpImage.color = new Color(prev.r+value, prev.g+value, prev.b+value, prev.a+value);
-            //this.hpGauge.GetComponent<Image>().fillAmount += 0.2f * level;
+            //this.GameObj_HpGauge.GetComponent<Image>().fillAmount += 0.2f * level;
             lifeCount += level;
-            UI_lifeCount.GetComponent<Text>().text = lifeCount.ToString();
+            GameObj_LifeCount.GetComponent<Text>().text = lifeCount.ToString();
         }
     }
 

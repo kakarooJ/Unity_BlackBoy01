@@ -55,6 +55,7 @@ public class UvController : MonoBehaviour
         playSound();
         
         //bomb 소멸
+        gameObject.SetActive(false);
         Destroy(gameObject);
     }
 
@@ -65,6 +66,7 @@ public class UvController : MonoBehaviour
         playSound();
         
         //소멸
+        gameObject.SetActive(false);
         Destroy(gameObject);
     }
 

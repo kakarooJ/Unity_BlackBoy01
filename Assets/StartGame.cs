@@ -10,6 +10,10 @@ public class StartGame : MonoBehaviour
         StartCoroutine(loadScene());
     }
 
+    public void onClickExitGameButton() {
+        Application.Quit();
+    }
+
     IEnumerator loadScene() {
         yield return new WaitForSeconds(1.0f);
         SceneManager.LoadScene("GameScene");

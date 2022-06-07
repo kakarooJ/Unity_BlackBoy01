@@ -10,6 +10,10 @@ public class Replay : MonoBehaviour
         StartCoroutine(loadScene());
     }
 
+    public void onClickExitButton() {
+        Application.Quit();
+    }
+
     IEnumerator loadScene() {
         yield return new WaitForSeconds(1.0f);
         SceneManager.LoadScene("GameScene");

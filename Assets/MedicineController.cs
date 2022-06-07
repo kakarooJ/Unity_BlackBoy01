@@ -57,6 +57,7 @@ public class MedicineController : MonoBehaviour
         playSound();
         
         //소멸
+        gameObject.SetActive(false);
         Destroy(gameObject);
     }
 
@@ -69,6 +70,7 @@ public class MedicineController : MonoBehaviour
         playSound();
         
         //소멸
+        gameObject.SetActive(false);
         Destroy(gameObject);
     }
 
