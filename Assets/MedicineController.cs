@@ -6,7 +6,6 @@ public class MedicineController : MonoBehaviour
 {
     public float speed = 40;
     public int increaseLevel = 1;
-    public static int medicineCount = 0;
 
     GameObject boy;
 
@@ -53,7 +52,7 @@ public class MedicineController : MonoBehaviour
         GameObject director = GameObject.Find("GameDirector");
         director.GetComponent<GameDirector>().increaseHP(increaseLevel);
 
-        medicineCount++;
+        Common.medicineCount++;
 
         playSound();
         
@@ -65,7 +64,7 @@ public class MedicineController : MonoBehaviour
         GameObject director = GameObject.Find("GameDirector");
         director.GetComponent<GameDirector>().increaseHP(increaseLevel);
 
-        medicineCount++;
+        Common.medicineCount++;
 
         playSound();
         

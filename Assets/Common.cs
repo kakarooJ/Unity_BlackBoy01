@@ -17,4 +17,8 @@ public class Common
     //Decrease HP
     public static int bombDecHP = 1;
     public static int uvDecHP = 2;
+
+    //UI count
+    public static int playerJumpCount = 0;
+    public static int medicineCount = 0;
 }

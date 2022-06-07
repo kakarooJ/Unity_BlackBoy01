@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BoyController : MonoBehaviour
 {
-    public static int jumpCount = 0;
     public float speed = 3;
     float border = 0.01f;
 
@@ -24,7 +23,8 @@ public class BoyController : MonoBehaviour
     void Start()
     {
         this.rigid2D = GetComponent<Rigidbody2D>();
-        jumpCount = 0;
+        Common.playerJumpCount = 0;
+        Common.medicineCount = 0;
     }
 
     public void LeftButtonDown() {
@@ -51,7 +51,7 @@ public class BoyController : MonoBehaviour
             vx = 0;
         }*/
         Debug.Log("JUMP BUTTON");
-        jumpCount++;
+        Common.playerJumpCount++;
 
         //if(this.rigid2D.velocity.y == 0)
         {

@@ -63,8 +63,8 @@ public class GameDirector : MonoBehaviour
 
         UI_score.GetComponent<Text>().text = "Score: " + curScore.ToString();
 
-        UI_JumpCount.GetComponent<Text>().text = BoyController.jumpCount.ToString();
-        UI_MedicineCount.GetComponent<Text>().text = MedicineController.medicineCount.ToString();
+        UI_JumpCount.GetComponent<Text>().text = Common.playerJumpCount.ToString();
+        UI_MedicineCount.GetComponent<Text>().text = Common.medicineCount.ToString();
         
 /*
         int minute = (int)scoreTime / 60;
@@ -89,8 +89,8 @@ public class GameDirector : MonoBehaviour
     int getAdditionalScore() {
         int value = 0;
 
-        value += BoyController.jumpCount * Common.jumpScore;   //jump는 1회당 5점
-        value += MedicineController.medicineCount * Common.medicineScore;
+        value += Common.playerJumpCount * Common.jumpScore;   //jump는 1회당 5점
+        value += Common.medicineCount * Common.medicineScore;
         //TODO
 
         return value;
